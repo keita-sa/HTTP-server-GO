@@ -5,10 +5,12 @@ import (
 	"net/http"
 )
 
+func oneHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Welcome to my website!")
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Welcome to my website!")
-	})
+	http.HandleFunc("/", oneHandler)
 
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs)) // URLのプレフィックスをStripPrefixで除外する
